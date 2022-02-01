@@ -21,6 +21,8 @@ npm install
 npm start
 ```
 
+Note: The [json file](https://github.com/timokoenig/eu-dcc-rules/blob/main/eu-dcc-rules.json) with all rules gets automatically updated every 24 hours via Github Action.
+
 ## Disclaimer
 
 There is no guarantee that the information published on the web page is accurate, complete and up to date.
