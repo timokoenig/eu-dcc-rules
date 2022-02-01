@@ -1,6 +1,5 @@
 name: Cron to download newest DCC rules
 on:
-  push:
   schedule:
     - cron: "0 0 * * *"
 jobs:
