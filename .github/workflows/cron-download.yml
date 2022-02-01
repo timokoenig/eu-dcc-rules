@@ -1,0 +1,22 @@
+name: Cron to download newest DCC rules
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - run: npm install
+      - name: Run script
+        run: npm start
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[Bot] Update eu-dcc-rules.json"
+          commit_user_name: Timo Koenig
+          commit_user_email: timo@timokoenig.com
+          commit_author: Timo Koenig <timo@timokoenig.com>
