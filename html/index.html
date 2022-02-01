@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EU DCC Rules</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const countries = [{"name":"Andorra","countrCode":"AD"},{"name":"United Arab Emirates","countrCode":"AE"},{"name":"Afghanistan","countrCode":"AF"},{"name":"Antigua and Barbuda","countrCode":"AG"},{"name":"Anguilla","countrCode":"AI"},{"name":"Albania","countrCode":"AL"},{"name":"Armenia","countrCode":"AM"},{"name":"Angola","countrCode":"AO"},{"name":"Antarctica","countrCode":"AQ"},{"name":"Argentina","countrCode":"AR"},{"name":"American Samoa","countrCode":"AS"},{"name":"Austria","countrCode":"AT"},{"name":"Australia","countrCode":"AU"},{"name":"Aruba","countrCode":"AW"},{"name":"Aland Islands","countrCode":"AX"},{"name":"Azerbaijan","countrCode":"AZ"},{"name":"Bosnia and Herzegovina","countrCode":"BA"},{"name":"Barbados","countrCode":"BB"},{"name":"Bangladesh","countrCode":"BD"},{"name":"Belgium","countrCode":"BE"},{"name":"Burkina Faso","countrCode":"BF"},{"name":"Bulgaria","countrCode":"BG"},{"name":"Bahrain","countrCode":"BH"},{"name":"Burundi","countrCode":"BI"},{"name":"Benin","countrCode":"BJ"},{"name":"Saint Barthelemy","countrCode":"BL"},{"name":"Bermuda","countrCode":"BM"},{"name":"Brunei","countrCode":"BN"},{"name":"Bolivia","countrCode":"BO"},{"name":"Bonaire, Saint Eustatius and Saba","countrCode":"BQ"},{"name":"Brazil","countrCode":"BR"},{"name":"Bahamas","countrCode":"BS"},{"name":"Bhutan","countrCode":"BT"},{"name":"Bouvet Island","countrCode":"BV"},{"name":"Botswana","countrCode":"BW"},{"name":"Belarus","countrCode":"BY"},{"name":"Belize","countrCode":"BZ"},{"name":"Canada","countrCode":"CA"},{"name":"Cocos Islands","countrCode":"CC"},{"name":"Democratic Republic of the Congo","countrCode":"CD"},{"name":"Central African Republic","countrCode":"CF"},{"name":"Republic of the Congo","countrCode":"CG"},{"name":"Switzerland","countrCode":"CH"},{"name":"Ivory Coast","countrCode":"CI"},{"name":"Cook Islands","countrCode":"CK"},{"name":"Chile","countrCode":"CL"},{"name":"Cameroon","countrCode":"CM"},{"name":"China","countrCode":"CN"},{"name":"Colombia","countrCode":"CO"},{"name":"Costa Rica","countrCode":"CR"},{"name":"Cuba","countrCode":"CU"},{"name":"Cabo Verde","countrCode":"CV"},{"name":"Curacao","countrCode":"CW"},{"name":"Christmas Island","countrCode":"CX"},{"name":"Cyprus","countrCode":"CY"},{"name":"Czechia","countrCode":"CZ"},{"name":"Germany","countrCode":"DE"},{"name":"Djibouti","countrCode":"DJ"},{"name":"Denmark","countrCode":"DK"},{"name":"Dominica","countrCode":"DM"},{"name":"Dominican Republic","countrCode":"DO"},{"name":"Algeria","countrCode":"DZ"},{"name":"Ecuador","countrCode":"EC"},{"name":"Estonia","countrCode":"EE"},{"name":"Egypt","countrCode":"EG"},{"name":"Western Sahara","countrCode":"EH"},{"name":"Eritrea","countrCode":"ER"},{"name":"Spain","countrCode":"ES"},{"name":"Ethiopia","countrCode":"ET"},{"name":"Finland","countrCode":"FI"},{"name":"Fiji","countrCode":"FJ"},{"name":"Falkland Islands","countrCode":"FK"},{"name":"Micronesia","countrCode":"FM"},{"name":"Faroe Islands","countrCode":"FO"},{"name":"France","countrCode":"FR"},{"name":"Gabon","countrCode":"GA"},{"name":"United Kingdom","countrCode":"GB"},{"name":"Grenada","countrCode":"GD"},{"name":"Georgia","countrCode":"GE"},{"name":"French Guiana","countrCode":"GF"},{"name":"Guernsey","countrCode":"GG"},{"name":"Ghana","countrCode":"GH"},{"name":"Gibraltar","countrCode":"GI"},{"name":"Greenland","countrCode":"GL"},{"name":"Gambia","countrCode":"GM"},{"name":"Guinea","countrCode":"GN"},{"name":"Guadeloupe","countrCode":"GP"},{"name":"Equatorial Guinea","countrCode":"GQ"},{"name":"Greece","countrCode":"GR"},{"name":"South Georgia and the South Sandwich Islands","countrCode":"GS"},{"name":"Guatemala","countrCode":"GT"},{"name":"Guam","countrCode":"GU"},{"name":"Guinea-Bissau","countrCode":"GW"},{"name":"Guyana","countrCode":"GY"},{"name":"Hong Kong","countrCode":"HK"},{"name":"Heard Island and McDonald Islands","countrCode":"HM"},{"name":"Honduras","countrCode":"HN"},{"name":"Croatia","countrCode":"HR"},{"name":"Haiti","countrCode":"HT"},{"name":"Hungary","countrCode":"HU"},{"name":"Indonesia","countrCode":"ID"},{"name":"Ireland","countrCode":"IE"},{"name":"Israel","countrCode":"IL"},{"name":"Isle of Man","countrCode":"IM"},{"name":"India","countrCode":"IN"},{"name":"British Indian Ocean Territory","countrCode":"IO"},{"name":"Iraq","countrCode":"IQ"},{"name":"Iran","countrCode":"IR"},{"name":"Iceland","countrCode":"IS"},{"name":"Italy","countrCode":"IT"},{"name":"Jersey","countrCode":"JE"},{"name":"Jamaica","countrCode":"JM"},{"name":"Jordan","countrCode":"JO"},{"name":"Japan","countrCode":"JP"},{"name":"Kenya","countrCode":"KE"},{"name":"Kyrgyzstan","countrCode":"KG"},{"name":"Cambodia","countrCode":"KH"},{"name":"Kiribati","countrCode":"KI"},{"name":"Comoros","countrCode":"KM"},{"name":"Saint Kitts and Nevis","countrCode":"KN"},{"name":"North Korea","countrCode":"KP"},{"name":"South Korea","countrCode":"KR"},{"name":"Kosovo","countrCode":"XK"},{"name":"Kuwait","countrCode":"KW"},{"name":"Cayman Islands","countrCode":"KY"},{"name":"Kazakhstan","countrCode":"KZ"},{"name":"Laos","countrCode":"LA"},{"name":"Lebanon","countrCode":"LB"},{"name":"Saint Lucia","countrCode":"LC"},{"name":"Liechtenstein","countrCode":"LI"},{"name":"Sri Lanka","countrCode":"LK"},{"name":"Liberia","countrCode":"LR"},{"name":"Lesotho","countrCode":"LS"},{"name":"Lithuania","countrCode":"LT"},{"name":"Luxembourg","countrCode":"LU"},{"name":"Latvia","countrCode":"LV"},{"name":"Libya","countrCode":"LY"},{"name":"Morocco","countrCode":"MA"},{"name":"Monaco","countrCode":"MC"},{"name":"Moldova","countrCode":"MD"},{"name":"Montenegro","countrCode":"ME"},{"name":"Saint Martin","countrCode":"MF"},{"name":"Madagascar","countrCode":"MG"},{"name":"Marshall Islands","countrCode":"MH"},{"name":"North Macedonia","countrCode":"MK"},{"name":"Mali","countrCode":"ML"},{"name":"Myanmar","countrCode":"MM"},{"name":"Mongolia","countrCode":"MN"},{"name":"Macao","countrCode":"MO"},{"name":"Northern Mariana Islands","countrCode":"MP"},{"name":"Martinique","countrCode":"MQ"},{"name":"Mauritania","countrCode":"MR"},{"name":"Montserrat","countrCode":"MS"},{"name":"Malta","countrCode":"MT"},{"name":"Mauritius","countrCode":"MU"},{"name":"Maldives","countrCode":"MV"},{"name":"Malawi","countrCode":"MW"},{"name":"Mexico","countrCode":"MX"},{"name":"Malaysia","countrCode":"MY"},{"name":"Mozambique","countrCode":"MZ"},{"name":"Namibia","countrCode":"NA"},{"name":"New Caledonia","countrCode":"NC"},{"name":"Niger","countrCode":"NE"},{"name":"Norfolk Island","countrCode":"NF"},{"name":"Nigeria","countrCode":"NG"},{"name":"Nicaragua","countrCode":"NI"},{"name":"Netherlands","countrCode":"NL"},{"name":"Norway","countrCode":"NO"},{"name":"Nepal","countrCode":"NP"},{"name":"Nauru","countrCode":"NR"},{"name":"Niue","countrCode":"NU"},{"name":"New Zealand","countrCode":"NZ"},{"name":"Oman","countrCode":"OM"},{"name":"Panama","countrCode":"PA"},{"name":"Peru","countrCode":"PE"},{"name":"French Polynesia","countrCode":"PF"},{"name":"Papua New Guinea","countrCode":"PG"},{"name":"Philippines","countrCode":"PH"},{"name":"Pakistan","countrCode":"PK"},{"name":"Poland","countrCode":"PL"},{"name":"Saint Pierre and Miquelon","countrCode":"PM"},{"name":"Pitcairn","countrCode":"PN"},{"name":"Puerto Rico","countrCode":"PR"},{"name":"Palestinian Territory","countrCode":"PS"},{"name":"Portugal","countrCode":"PT"},{"name":"Palau","countrCode":"PW"},{"name":"Paraguay","countrCode":"PY"},{"name":"Qatar","countrCode":"QA"},{"name":"Reunion","countrCode":"RE"},{"name":"Romania","countrCode":"RO"},{"name":"Serbia","countrCode":"RS"},{"name":"Russia","countrCode":"RU"},{"name":"Rwanda","countrCode":"RW"},{"name":"Saudi Arabia","countrCode":"SA"},{"name":"Solomon Islands","countrCode":"SB"},{"name":"Seychelles","countrCode":"SC"},{"name":"Sudan","countrCode":"SD"},{"name":"South Sudan","countrCode":"SS"},{"name":"Sweden","countrCode":"SE"},{"name":"Singapore","countrCode":"SG"},{"name":"Saint Helena","countrCode":"SH"},{"name":"Slovenia","countrCode":"SI"},{"name":"Svalbard and Jan Mayen","countrCode":"SJ"},{"name":"Slovakia","countrCode":"SK"},{"name":"Sierra Leone","countrCode":"SL"},{"name":"San Marino","countrCode":"SM"},{"name":"Senegal","countrCode":"SN"},{"name":"Somalia","countrCode":"SO"},{"name":"Suriname","countrCode":"SR"},{"name":"Sao Tome and Principe","countrCode":"ST"},{"name":"El Salvador","countrCode":"SV"},{"name":"Sint Maarten","countrCode":"SX"},{"name":"Syria","countrCode":"SY"},{"name":"Eswatini","countrCode":"SZ"},{"name":"Turks and Caicos Islands","countrCode":"TC"},{"name":"Chad","countrCode":"TD"},{"name":"French Southern Territories","countrCode":"TF"},{"name":"Togo","countrCode":"TG"},{"name":"Thailand","countrCode":"TH"},{"name":"Tajikistan","countrCode":"TJ"},{"name":"Tokelau","countrCode":"TK"},{"name":"Timor Leste","countrCode":"TL"},{"name":"Turkmenistan","countrCode":"TM"},{"name":"Tunisia","countrCode":"TN"},{"name":"Tonga","countrCode":"TO"},{"name":"Turkey","countrCode":"TR"},{"name":"Trinidad and Tobago","countrCode":"TT"},{"name":"Tuvalu","countrCode":"TV"},{"name":"Taiwan","countrCode":"TW"},{"name":"Tanzania","countrCode":"TZ"},{"name":"Ukraine","countrCode":"UA"},{"name":"Uganda","countrCode":"UG"},{"name":"United States Minor Outlying Islands","countrCode":"UM"},{"name":"United States","countrCode":"US"},{"name":"Uruguay","countrCode":"UY"},{"name":"Uzbekistan","countrCode":"UZ"},{"name":"Vatican","countrCode":"VA"},{"name":"Saint Vincent and the Grenadines","countrCode":"VC"},{"name":"Venezuela","countrCode":"VE"},{"name":"British Virgin Islands","countrCode":"VG"},{"name":"U.S. Virgin Islands","countrCode":"VI"},{"name":"Vietnam","countrCode":"VN"},{"name":"Vanuatu","countrCode":"VU"},{"name":"Wallis and Futuna","countrCode":"WF"},{"name":"Samoa","countrCode":"WS"},{"name":"Yemen","countrCode":"YE"},{"name":"Mayotte","countrCode":"YT"},{"name":"South Africa","countrCode":"ZA"},{"name":"Zambia","countrCode":"ZM"},{"name":"Zimbabwe","countrCode":"ZW"},{"name":"Serbia and Montenegro","countrCode":"CS"},{"name":"Netherlands Antilles","countrCode":"AN"}]
+
+        function getCountries(json) {
+            let countries = []
+            json.rules.forEach(rule => {
+                if (!countries.includes(rule['Country'])) {
+                    countries.push(rule['Country'])
+                }
+            })
+            return countries.sort()
+        }
+
+        function getRuleCount(json, countryCode) {
+            return getCountryRules(json, countryCode).length
+        }
+
+        function getCountryRules(json, countryCode) {
+            return json.rules.filter(rule => rule['Country'] == countryCode)
+        }
+
+        function changeCountry(json, country) {
+            let rule = ''
+            if (getCountryRules(json, country).length > 0) {
+                rule = getCountryRules(json, country)[0].Identifier
+            }
+            window.history.replaceState(null, null, `?country=${country}&rule=${rule}`);
+        }
+
+        function changeRule(ruleIdentifier) {
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
+            const country = urlParams.get('country')
+            window.history.replaceState(null, null, `?country=${country}&rule=${ruleIdentifier}`);
+        }
+
+        function updateCountries(json) {
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
+
+            const elements = document.getElementById('countries').getElementsByClassName('button')
+            while (elements.length > 0) elements[0].remove()
+
+            getCountries(json).forEach(country => {
+                let btn = document.createElement('button')
+                btn.className = `button is-fullwidth is-medium ${urlParams.get('country') == country ? 'is-primary' : 'is-white'}`
+                btn.innerText = `${countries.find(c => c.countrCode == country).name} (${getRuleCount(json, country).toString()})`
+                btn.addEventListener('click', () => {
+                    changeCountry(json, country)
+                    updateView(json)
+                })
+                document.getElementById('countries').appendChild(btn)
+            })
+        }
+
+        function updateRules(json) {
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
+
+            const elements = document.getElementById('rules').getElementsByClassName('button')
+            while (elements.length > 0) elements[0].remove()
+
+            getCountryRules(json, urlParams.get('country')).forEach(countryRule => {
+                let btn = document.createElement('button')
+                btn.className = `button is-fullwidth is-medium ${urlParams.get('rule') == countryRule.Identifier ? 'is-primary' : 'is-white'}`
+                btn.innerText = countryRule.Identifier
+                btn.addEventListener('click', () => {
+                    changeRule(countryRule.Identifier)
+                    updateView(json)
+                })
+                document.getElementById('rules').appendChild(btn)
+            })
+        }
+
+        function updateRule(json) {
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
+
+            const rule = json.rules.find(rule => rule.Identifier == urlParams.get('rule'))
+            document.getElementById('rule-type').innerText = rule.Type
+            document.getElementById('rule-version').innerText = rule.Version
+            document.getElementById('rule-schemaversion').innerText = rule.SchemaVersion
+            document.getElementById('rule-engine').innerText = rule.Engine
+            document.getElementById('rule-engineversion').innerText = rule.EngineVersion
+            document.getElementById('rule-certificatetype').innerText = rule.CertificateType
+            document.getElementById('rule-validfrom').innerText = moment(rule.ValidFrom).format('DD.MM.YYYY HH:mm')
+            document.getElementById('rule-validto').innerText = moment(rule.ValidTo).format('DD.MM.YYYY HH:mm')
+            document.getElementById('rule-logic').innerHTML = `<pre>${JSON.stringify(rule.Logic, null, 2)}</pre>`
+            document.getElementById('rule-description').innerHTML = rule.Description.map(desc => `<p class="mb-4"><b>${desc.lang.toUpperCase()}:</b> ${desc.desc}`)
+        }
+
+        function updateView(json) {
+            updateCountries(json)
+            updateRules(json)
+            updateRule(json)
+        }
+
+        fetch('https://raw.githubusercontent.com/timokoenig/eu-dcc-rules/main/html/eu-dcc-rules.json')
+            .then(response => response.text())
+            .then(body => JSON.parse(body))
+            .then(json => {
+                document.getElementById('updated-at').innerText = moment(json['updatedAt']).format('DD.MM.YYYY HH:mm')
+
+                const queryString = window.location.search
+                const urlParams = new URLSearchParams(queryString)
+                if (!urlParams.get('country')) {
+                    changeCountry(json, 'DE')
+                }
+
+                updateView(json)
+            })
+            .then(json => console.log(json));
+    </script>
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+        <div class="columns mb-6">
+            <div class="column">
+                <h1 class="title">
+                    <a href="/" class="has-text-black-bis">EU DCC Rules</a>
+                </h1>
+                  <p class="subtitle">
+                    Last Update <strong id="updated-at"></strong><br />
+                  </p>
+            </div>
+            <div class="column">
+                <p class="subtitle has-text-danger is-size-6">
+                    Disclaimer: There is no guarantee that the information published on the web page is accurate, complete and up to date. For more information where the data is from, see <a href="https://github.com/timokoenig/eu-dcc-rules#readme" target="_blank">github.com/timokoenig/eu-dcc-rules</a>
+                  </p>
+            </div>
+        </div>
+      <div class="columns">
+        <div class="column" id="countries">
+          <h2 class="has-text-centered has-text-weight-bold subtitle">Countries</h2>
+        </div>
+        <div class="column" id="rules">
+            <h2 class="has-text-centered has-text-weight-bold subtitle">Rules</h2>
+        </div>
+        <div class="column is-half" id="rule">
+            <h2 class="has-text-centered has-text-weight-bold subtitle">Rule</h2>
+            <table class="table is-fullwidth">
+                <tr>
+                    <td>Type</td>
+                    <td id="rule-type"></td>
+                </tr>
+                <tr>
+                    <td>Version</td>
+                    <td id="rule-version"></td>
+                </tr>
+                <tr>
+                    <td>Schema Version</td>
+                    <td id="rule-schemaversion"></td>
+                </tr>
+                <tr>
+                    <td>Engine</td>
+                    <td id="rule-engine"></td>
+                </tr>
+                <tr>
+                    <td>Engine Version</td>
+                    <td id="rule-engineversion"></td>
+                </tr>
+                <tr>
+                    <td>Certificate Type</td>
+                    <td id="rule-certificatetype"></td>
+                </tr>
+                <tr>
+                    <td>ValidFrom</td>
+                    <td id="rule-validfrom"></td>
+                </tr>
+                <tr>
+                    <td>ValidTo</td>
+                    <td id="rule-validto"></td>
+                </tr>
+            </table>
+            <h3 class="subtitle">Description</h3>
+            <div id="rule-description"></div>
+            <h3 class="subtitle">Logic</h3>
+            <p id="rule-logic"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+      <div class="container has-text-centered">
+          <hr />
+          <p>
+            Made with <span class="has-text-danger">♥</span> for the community | <a href="https://github.com/timokoenig" target="_blank">Timo Koenig</a><br />
+            <a href="/imprint.html" rel="nofollow">Imprint</a>
+          </p>
+      </div>
+  </section>
+  </body>
+</html>
