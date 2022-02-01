@@ -103,7 +103,7 @@
             updateRule(json)
         }
 
-        fetch('https://raw.githubusercontent.com/timokoenig/eu-dcc-rules/main/html/eu-dcc-rules.json')
+        fetch('https://raw.githubusercontent.com/timokoenig/eu-dcc-rules/main/eu-dcc-rules.json')
             .then(response => response.text())
             .then(body => JSON.parse(body))
             .then(json => {

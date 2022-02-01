@@ -2,7 +2,7 @@ import https from "https";
 import fs from "fs";
 
 const url = "https://distribution.dcc-rules.de/rules";
-const filename = "html/eu-dcc-rules.json";
+const filename = "eu-dcc-rules.json";
 
 type Rules = {
   updatedAt: Date;
