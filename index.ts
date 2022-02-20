@@ -1,7 +1,7 @@
 import https from "https";
 import fs from "fs";
 
-const url = "https://distribution.dcc-rules.de/rules";
+const host = "distribution.dcc-rules.de";
 const filename = "eu-dcc-rules.json";
 
 type Rules = {
@@ -39,18 +39,35 @@ type Rule = {
   Logic: any;
 };
 
-function getJSON<T>(url: string): Promise<T> {
-  console.log(url);
+function getJSON<T>(path: string): Promise<T> {
+  console.log(`https://${host}${path}`);
   return new Promise((resolve, reject) => {
-    const req = https.get(url, (res) => {
-      let json = "";
-      res.on("data", function (chunk) {
-        json += chunk;
-      });
-      res.on("end", function () {
-        resolve(JSON.parse(json));
-      });
-    });
+    const req = https.get(
+      {
+        protocol: "https:",
+        host: host,
+        path: path,
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+        },
+      },
+      (res) => {
+        let json = "";
+        res.on("data", function (chunk) {
+          json += chunk;
+        });
+        res.on("end", function () {
+          if (res.statusCode === 200) {
+            resolve(JSON.parse(json));
+          } else {
+            reject(
+              JSON.parse(json).problem !== undefined ??
+                "Request failed with unknown error"
+            );
+          }
+        });
+      }
+    );
     req.on("error", function (err) {
       reject(err);
     });
@@ -71,7 +88,7 @@ function saveJSON(data: Rules): Promise<void> {
 
 function getRuleURL(rule: RuleSimple): string {
   if (!rule.country || rule.country.length == 0) return null;
-  return `${url}/${rule.country.toUpperCase()}/${rule.hash}`;
+  return `/rules/${rule.country.toUpperCase()}/${rule.hash}`;
 }
 
 async function getRule(simpleRule: RuleSimple): Promise<Rule> {
@@ -82,7 +99,7 @@ async function getRule(simpleRule: RuleSimple): Promise<Rule> {
   return rule;
 }
 
-getJSON<RuleSimple[]>(url)
+getJSON<RuleSimple[]>("/rules")
   .then(async (data) => {
     const arr: Rule[] = [];
     for (let i = 0; i < data.length; i++) {
