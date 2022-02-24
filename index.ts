@@ -1,6 +1,8 @@
 import https from "https";
 import fs from "fs";
 
+const agent = new https.Agent({ keepAlive: true });
+
 const host = "distribution.dcc-rules.de";
 const filename = "eu-dcc-rules.json";
 
@@ -39,36 +41,34 @@ type Rule = {
   Logic: any;
 };
 
-function getJSON<T>(path: string): Promise<T> {
+function getJSON<T>(path: string, retryCount = 0): Promise<T> {
   console.log(`https://${host}${path}`);
   return new Promise((resolve, reject) => {
-    const req = https.get(
-      {
-        protocol: "https:",
-        host: host,
-        path: path,
-        headers: {
-          "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
-        },
-      },
-      (res) => {
-        let json = "";
-        res.on("data", function (chunk) {
-          json += chunk;
-        });
-        res.on("end", function () {
-          if (res.statusCode === 200) {
-            resolve(JSON.parse(json));
-          } else {
-            reject(
-              JSON.parse(json).problem !== undefined ??
-                "Request failed with unknown error"
-            );
-          }
-        });
-      }
-    );
+    const req = https.get(`https://${host}${path}`, { agent }, (res) => {
+      let json = "";
+      res.on("data", function (chunk) {
+        json += chunk;
+      });
+      res.on("end", function () {
+        if (res.statusCode === 200) {
+          resolve(JSON.parse(json));
+        } else {
+          reject(
+            JSON.parse(json).problem !== undefined ??
+              "Request failed with unknown error"
+          );
+        }
+      });
+    });
     req.on("error", function (err) {
+      if (req.reusedSocket && err.name === "ECONNRESET") {
+        if (retryCount < 3) {
+          getJSON(path, retryCount++)
+            .then(resolve)
+            .catch(reject);
+          return;
+        }
+      }
       reject(err);
     });
   });
