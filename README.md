@@ -1,6 +1,6 @@
 # EU DCC Rules
 
-This is an overview of the currently available DCC rules in the EU.
+This is an overview of the currently available EU entry rules, DE Domestic rules, and DE Booster Notification rules.
 
 [timokoenig.github.io/eu-dcc-rules](https://timokoenig.github.io/eu-dcc-rules)
 
@@ -14,14 +14,18 @@ Note: This repository and its content is a community project. It is not an offic
 
 ## Update Rules
 
-The script downloads the EU entry rules from the national backend and writes them in a `eu-dcc-rules.json` file.
+The script downloads the DCC rules from the national backend in Germany and saves them in the following files:
+
+- EU Entry Rules [eu-dcc-rules.json](./eu-dcc-rules.json)
+- DE Domestic Rules [de-dcc-rules.json](./de-dcc-rules.json)
+- DE Booster Notification Rules [de-bn-rules.json](./de-bn-rules.json)
 
 ```sh
 npm install
 npm start
 ```
 
-Note: The [json file](https://github.com/timokoenig/eu-dcc-rules/blob/main/eu-dcc-rules.json) with all rules gets automatically updated every 24 hours via Github Action.
+Note: The json files with all rules get automatically updated every 24 hours via Github Action.
 
 ## Disclaimer
 
