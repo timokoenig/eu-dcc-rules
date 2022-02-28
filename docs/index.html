@@ -32,24 +32,27 @@
             if (getCountryRules(json, country).length > 0) {
                 rule = getCountryRules(json, country)[0].Identifier
             }
-            window.history.replaceState(null, null, `?country=${country}&rule=${rule}`);
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
+            const ruleset = urlParams.get('ruleset') ?? 'eu-dcc-rules'
+            window.history.replaceState(null, null, `?ruleset=${ruleset}&country=${country}&rule=${rule}`);
         }
 
         function changeRule(ruleIdentifier) {
             const queryString = window.location.search
             const urlParams = new URLSearchParams(queryString)
             const country = urlParams.get('country')
-            window.history.replaceState(null, null, `?country=${country}&rule=${ruleIdentifier}`);
+            const ruleset = urlParams.get('ruleset') ?? 'eu-dcc-rules'
+            window.history.replaceState(null, null, `?ruleset=${ruleset}&country=${country}&rule=${ruleIdentifier}`);
         }
 
         function updateCountries(json) {
-            const queryString = window.location.search
-            const urlParams = new URLSearchParams(queryString)
-
             const elements = document.getElementById('countries').getElementsByClassName('button')
             while (elements.length > 0) elements[0].remove()
 
             getCountries(json).forEach(country => {
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
                 let btn = document.createElement('button')
                 btn.className = `button is-fullwidth is-medium ${urlParams.get('country') == country ? 'is-primary' : 'is-white'}`
                 btn.innerText = `${countries.find(c => c.countrCode == country).name} (${getRuleCount(json, country).toString()})`
@@ -64,7 +67,6 @@
         function updateRules(json) {
             const queryString = window.location.search
             const urlParams = new URLSearchParams(queryString)
-
             const elements = document.getElementById('rules').getElementsByClassName('button')
             while (elements.length > 0) elements[0].remove()
 
@@ -83,7 +85,6 @@
         function updateRule(json) {
             const queryString = window.location.search
             const urlParams = new URLSearchParams(queryString)
-
             const rule = json.rules.find(rule => rule.Identifier == urlParams.get('rule'))
             document.getElementById('rule-type').innerText = rule.Type
             document.getElementById('rule-version').innerText = rule.Version
@@ -103,27 +104,36 @@
             updateRule(json)
         }
 
-        fetch('https://raw.githubusercontent.com/timokoenig/eu-dcc-rules/main/eu-dcc-rules.json')
-            .then(response => response.text())
-            .then(body => JSON.parse(body))
-            .then(json => {
-                document.getElementById('updated-at').innerText = moment(json['updatedAt']).format('DD.MM.YYYY HH:mm')
+        function loadRules(rules) {
+            fetch(`https://raw.githubusercontent.com/timokoenig/eu-dcc-rules/main/${rules}.json`)
+                .then(response => response.text())
+                .then(body => JSON.parse(body))
+                .then(json => {
+                    document.getElementById('updated-at').innerText = moment(json['updatedAt']).format('DD.MM.YYYY HH:mm')
 
-                const queryString = window.location.search
-                const urlParams = new URLSearchParams(queryString)
-                if (!urlParams.get('country')) {
-                    changeCountry(json, 'DE')
-                }
+                    const queryString = window.location.search
+                    const urlParams = new URLSearchParams(queryString)
+                    if (!urlParams.get('country')) {
+                        changeCountry(json, 'DE')
+                    }
 
-                updateView(json)
-            })
-            .then(json => console.log(json));
+                    updateView(json)
+                })
+                .catch(err => console.log(err));
+        }
+
+        function changeRuleset(e) {
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
+            if (urlParams.get('ruleset') == e.value) return
+            window.location.replace(`${window.location.href.split('?')[0]}?ruleset=${e.value}`)
+        }
     </script>
   </head>
   <body>
   <section class="section">
     <div class="container">
-        <div class="columns mb-6">
+        <div class="columns mb-2">
             <div class="column">
                 <h1 class="title">
                     <a href="/eu-dcc-rules" class="has-text-black-bis">EU DCC Rules</a>
@@ -137,6 +147,18 @@
                     Disclaimer: There is no guarantee that the information published on the web page is accurate, complete and up to date. For more information, see <a href="https://github.com/timokoenig/eu-dcc-rules#readme" target="_blank">github.com/timokoenig/eu-dcc-rules</a>
                   </p>
             </div>
+        </div>
+        <div class="mb-6 is-flex">
+            <div class="mr-2 is-flex is-flex-direction-row is-justify-content-center">
+                <span class="title is-5 mt-2">Select Rule Set:</span>
+            </div>
+            <div class="select">
+                <select id="rule-selection" onchange="changeRuleset(this)">
+                  <option value='eu-dcc-rules'>EU Entry Rules</option>
+                  <option value='de-dcc-rules'>DE Domestic Rules</option>
+                  <option value='de-bn-rules'>DE Booster Notification Rules</option>
+                </select>
+              </div>
         </div>
       <div class="columns">
         <div class="column" id="countries">
@@ -200,5 +222,12 @@
         </p>
       </div>
   </section>
+  <script>
+        const queryString = window.location.search
+        const urlParams = new URLSearchParams(queryString)
+        const queryRuleset = urlParams.get('ruleset') ? urlParams.get('ruleset') : 'eu-dcc-rules';
+        loadRules(queryRuleset);
+        document.getElementById('rule-selection').value = queryRuleset;
+  </script>
   </body>
 </html>
