@@ -11,6 +11,7 @@ Note: This repository and its content is a community project. It is not an offic
 - [EU Digital Covid Certificate Documentation](https://ec.europa.eu/info/live-work-travel-eu/coronavirus-response/safe-covid-19-vaccines-europeans/eu-digital-covid-certificate_en)
 - [PDF EU DCC Validation Rules](https://ec.europa.eu/health/system/files/2021-06/eu-dcc_validation-rules_en_0.pdf)
 - [Implementation Details](https://github.com/ehn-dcc-development/dgc-business-rules)
+- [DGCA BusinessRule Service OpenAPI Specs](https://github.com/corona-warn-app/cwa-quicktest-onboarding/blob/master/api/dcc-rules-openAPI.json)
 
 ## Update Rules
 
@@ -30,3 +31,9 @@ Note: The json files with all rules get automatically updated every 24 hours via
 ## Disclaimer
 
 There is no guarantee that the information published on the web page is accurate, complete and up to date.
+
+## License
+
+Project is created under the [MIT License](./LICENSE)
+
+DGCA Business Rule Service is provided by T-Systems Internation GmbH under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
