@@ -1,3 +1,7 @@
+<p align="center">⚠️ This project has been discontinued ⚠️</p>
+
+---
+
 # EU DCC Rules
 
 This is an overview of the currently available EU entry rules, DE Domestic rules, and DE Booster Notification rules.
